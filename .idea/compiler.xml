@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="com.juhnowski.grpc_spring_kotlin_kafka_cassandra_demo.main" target="11" />
-      <module name="com.juhnowski.grpc_spring_kotlin_kafka_cassandra_demo.test" target="11" />
+      <module name="com.example.grpc_spring_kotlin_kafka_cassandra_demo.main" target="1.8" />
+      <module name="com.example.grpc_spring_kotlin_kafka_cassandra_demo.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
