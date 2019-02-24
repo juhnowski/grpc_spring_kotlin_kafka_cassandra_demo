@@ -1,4 +1,10 @@
-# Test Juhnowski Ilya
+# Демо Juhnowski Ilya
+Пример использования для собеседования:
+- docker
+- spring-boot
+- kotlin
+- kafka
+- cassandra
 
 ## Запуск сервис
 ./gradlew bootRun
