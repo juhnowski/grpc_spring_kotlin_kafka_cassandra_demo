@@ -18,7 +18,7 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
         classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
         classpath('se.transmode.gradle:gradle-docker:1.2')
-        //classpath("com.google.protobuf:protobuf-gradle-plugin:${protobufGradlePlugin}")
+        classpath("com.google.protobuf:protobuf-gradle-plugin:${protobufGradlePlugin}")
     }
 }
 
@@ -29,8 +29,8 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
 apply plugin: 'docker'
-//apply plugin: 'com.google.protobuf'
-//apply plugin: 'idea'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'idea'
 
 group = 'com.juhnowski'
 version = '0.0.1-SNAPSHOT'
@@ -82,10 +82,10 @@ dependencies {
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     //gRPC
-//    implementation "io.grpc:grpc-netty-shaded:${grpcVersion}"
-//    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
-//    implementation "io.grpc:grpc-stub:${grpcVersion}"
-//    compileOnly "javax.annotation:javax.annotation-api:1.2"
+    implementation "io.grpc:grpc-netty-shaded:${grpcVersion}"
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+    compileOnly "javax.annotation:javax.annotation-api:1.2"
 
 }
 
@@ -102,33 +102,33 @@ task buildDocker(type: Docker, dependsOn: build) {
     }
 }
 
-//protobuf {
-//    protoc {
-//        artifact = "com.google.protobuf:protoc:${protobufVersion}"
-//    }
-//    plugins {
-//        grpc {
-//            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
-//        }
-//        grpckotlin {
-//            artifact = "io.rouz:grpc-kotlin-gen:0.1.0:jdk8@jar"
-//        }
-//    }
-//    generateProtoTasks {
-//        all()*.plugins {
-//            grpc {}
-//            grpckotlin {}
-//        }
-//    }
-//}
-//
-//idea {
-//    module {
-//        sourceDirs += file("${projectDir}/build/generated/source/proto/main/java");
-//        sourceDirs += file("${projectDir}/build/generated/source/proto/main/grpc");
-//    }
-//}
-//compileKotlin.dependsOn ':generateProto'
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protobufVersion}"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+        grpckotlin {
+            artifact = "io.rouz:grpc-kotlin-gen:0.1.0:jdk8@jar"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+            grpckotlin {}
+        }
+    }
+}
+
+idea {
+    module {
+        sourceDirs += file("${projectDir}/build/generated/source/proto/main/java");
+        sourceDirs += file("${projectDir}/build/generated/source/proto/main/grpc");
+    }
+}
+compileKotlin.dependsOn ':generateProto'
 
 sourceSets.main.java.srcDirs += 'build/generated/source/proto/main/grpc'
 sourceSets.main.java.srcDirs += 'build/generated/source/proto/main/java'
